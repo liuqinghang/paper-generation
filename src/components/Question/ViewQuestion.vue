@@ -13,18 +13,18 @@
         </div>
       </div>
 
-      <div class="input-box" style="background: #4070a3">
-        <div class="input-text" style="background: #1863d2">
+      <div class="input-box" style="background: #ffffff">
+        <div class="input-text" style="background: #ffffff">
           章节:
         </div>
-        <div class="input-content" style="background: #8c939d">
-          <input-select ref="chapter" :method="m_chapter" :info="chapterList"
+        <div class="input-content" style="background: #ffffff">
+          <input-select ref="chapter" :info="chapterList" :method="m_chapter"
                         v-on:getChapter="getChapter"></input-select>
         </div>
       </div>
 
-      <div class="input-box" style="background: #41744e">
-        <div class="input-text" style="background: #1863d2">
+      <div class="input-box" style="background: #ffffff">
+        <div class="input-text" style="background: #ffffff">
           试题类型:
         </div>
         <div class="input-content">
@@ -34,43 +34,48 @@
         </div>
       </div>
 
-      <div class="input-box" style=" background: #223242">
+      <div class="input-box" style=" background: #ffffff">
         <div class="input-text" style="background: #ffffff">
           是否公开:
         </div>
         <div class="input-content">
-          <input type="checkbox" v-model="value1" style="">
+          <input type="checkbox" v-model="value1" style="float: left">
         </div>
       </div>
       <div class="input-box" style="background: #ffffff">
         <div class="input-text" style="background: #ffffff">
           题目内容
         </div>
-        <div class="input-content">
-          <input v-model="questionModel.content" placeholder="请输入试题">
+        <div class="input-content" >
+          <input v-model="questionModel.content" placeholder="请输入试题" name="question-content">
         </div>
       </div>
 
       <br/>
       <button @click="commitForm">提交信息</button>
-      <div class="content">
-        <ul id="questionShow">
-          <li v-for="item in questionList" :key="item.questionId">
-            {{item}}
-          </li>
-        </ul>
-      </div>
 
-      <br/>
-      试题类型 :: {{ questionModel.type }}
+        <table v-for="(item,index) in this.questionList" :item="item" :key="index">
+          <tr>
+            <td class="content">{{index}}</td>
+            <td class="content">{{item.questionId}}</td>
+            <td class="content">{{item.typeName}}</td>
+            <td class="content">{{item.content}}</td>
+<!--            <td><button @click="upQuestion(index,$event)" >上移</button></td>-->
+<!--            <td><button @click="downQuestion(index,$event)">下移</button></td>-->
+<!--            <td><button @click="deleteQuestion(index,$event)" >删除</button></td>-->
+          </tr>
+        </table>
 
-      科目 :: {{ questionModel.subject }}
+<!--      <br/>-->
+<!--      试题类型 :: {{ questionModel.type }}-->
 
-      章节 :: {{ questionModel.chapter }}
+<!--      科目 :: {{ questionModel.subject }}-->
 
-      是否公开 :: {{ value1 }}
+<!--      章节 :: {{ questionModel.chapter }}-->
 
-      试题内容 :: {{questionModel.questionContent}}
+<!--      是否公开 :: {{ value1 }}-->
+
+<!--      试题内容 :: {{questionModel.questionContent}}-->
     </div>
   </div>
 </template>
@@ -186,13 +191,14 @@ export default {
 
   .input-box {
     width: 32%;
-    padding-top: 5px;
+    padding-top: 20px;
+    padding: 5px;
+    border-radius: 2px;
     float: left;
   }
 
   .input-text {
     text-align:center;
-    padding-left: 5px;
     width: 30%;
     float: left;
   }
@@ -202,8 +208,10 @@ export default {
     float: left;
   }
 
-  .content {
-    width: 100%;
-    padding: 5px;
+  .content{
+    width: 40px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 </style>

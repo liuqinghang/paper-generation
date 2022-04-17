@@ -2,27 +2,21 @@
   <div id="app">
     <h1>智能组卷系统</h1>
 <!--    <QuestionSelect></QuestionSelect>-->
-    <router-link :to="{name:'view'}">view</router-link>
-    <router-link :to="{name:'save'}">save</router-link>
-    <router-link :to="{name:'user', params:{userId :12}}">user</router-link>
+    <router-link :to="{name:'view'}">试题查询</router-link>
+    <router-link :to="{name:'save'}">试题录入</router-link>
+    <router-link :to="{name:'autogenerate'}">智能组卷</router-link>
+<!--    <router-link :to="{name:'wordGenerate'}">试卷渲染</router-link>-->
     <router-link :to="{name:'user', params:{userId :13}}">user</router-link>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-
-import QuestionSelect from './components/Question'
-
 export default {
   name: 'App',
   components: {
-    QuestionSelect
   },
   mounted () {
-    // setTimeout(() => {
-    //   this.$router.push({name: 'login'})
-    // }, 3000)
   }
 }
 </script>

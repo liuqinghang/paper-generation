@@ -7,6 +7,8 @@ import login from '../components/Login'
 import user from '../components/user/index'
 import UserProfile from '../components/user/profile'
 import UserPost from '../components/user/post'
+import AutoGenerate from '../components/Question/AutoGenerate'
+import wordGenerate from '../components/Paper/FinalPaper'
 
 Vue.use(Router)
 export default new Router({
@@ -22,9 +24,19 @@ export default new Router({
       component: save
     },
     {
+      path: '/smartGenerate',
+      name: 'autogenerate',
+      component: AutoGenerate
+    },
+    {
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/paper2word',
+      name: 'wordGenerate',
+      component: wordGenerate
     },
     {
       path: '/user/:userId(\\d+)',

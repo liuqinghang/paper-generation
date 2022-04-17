@@ -13,18 +13,18 @@
         </div>
       </div>
 
-      <div class="input-box" style="background: #4070a3">
-        <div class="input-text" style="background: #1863d2">
+      <div class="input-box" style="background: #ffffff">
+        <div class="input-text" style="background: #ffffff">
           章节:
         </div>
-        <div class="input-content" style="background: #8c939d">
+        <div class="input-content" style="background: #ffffff">
           <input-select ref="chapter" :method="m_chapter" :info="chapterList"
                         v-on:getChapter="getChapter"></input-select>
         </div>
       </div>
 
-      <div class="input-box" style="background: #41744e">
-        <div class="input-text" style="background: #1863d2">
+      <div class="input-box" style="background: #ffffff">
+        <div class="input-text" style="background: #ffffff">
           试题类型:
         </div>
         <div class="input-content">
@@ -33,17 +33,24 @@
           </input-select>
         </div>
       </div>
-      <div class="Rate">
-      <rate :length="5" v-model="questionModel.difficulty"/>
-      </div>
-      <div class="input-box" style=" background: #223242">
+      <div class="input-box" style="background: #ffffff">
         <div class="input-text" style="background: #ffffff">
-          是否公开:
+          评分:
         </div>
         <div class="input-content">
-          <input type="checkbox" v-model="value1" style="">
+          <div class="Rate" style="height: 20px; background: #1863d2">
+          <rate :length="5" v-model="questionModel.difficulty" style="height: 20px"/>
+          </div>
         </div>
       </div>
+<!--      <div class="input-box" style=" background: #ffffff">-->
+<!--        <div class="input-text" style="background: #ffffff">-->
+<!--          是否公开:-->
+<!--        </div>-->
+<!--        <div class="input-content">-->
+<!--          <input type="checkbox" v-model="value1" style="">-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="input-box" style="background: #ffffff">
         <div class="input-text" style="background: #ffffff">
           题目内容
@@ -54,7 +61,7 @@
       </div>
       <button @click="saveQuestion">录入试题</button>
 
-      <div v-if="questionModel.type == 1 || questionModel.type == 2" style="background: #1863d2">
+      <div v-if="questionModel.type == 1 || questionModel.type == 2" style="background: #ffffff">
         <div class="title">
           <h3>选项设置</h3>
           <div class="numButton">
@@ -72,18 +79,18 @@
         <input v-model="form.detail">
       </div>
 
-      <br/>
-      试题类型 :: {{ questionModel.type }}
+<!--      <br/>-->
+<!--      试题类型 :: {{ questionModel.type }}-->
 
-      科目 :: {{ questionModel.subject }}
+<!--      科目 :: {{ questionModel.subject }}-->
 
-      章节 :: {{ questionModel.chapter }}
+<!--      章节 :: {{ questionModel.chapter }}-->
 
-      是否公开 :: {{ value1 }}
+<!--      是否公开 :: {{ value1 }}-->
 
-      试题内容 :: {{questionModel.questionContent}}
+<!--      试题内容 :: {{questionModel.questionContent}}-->
 
-      <br/>
+<!--      <br/>-->
 
     </div>
   </div>
@@ -180,13 +187,13 @@ export default {
             return
           }
         }
-        this.questionModel.content = this.questionModel.content + '$' + JSON.stringify(this.form.options)
+        this.questionModel.content = this.questionModel.content + '\\$' + JSON.stringify(this.form.options)
       } else { // 其他
         if (this.form.detail === null || this.form.detail === '') {
           alert('试题具体内容未填写')
           return
         }
-        this.questionModel.content = this.questionModel.content + '$' + this.form.detail
+        this.questionModel.content = this.questionModel.content + '\\$' + this.form.detail
       }
       console.log('model is')
 
@@ -199,9 +206,24 @@ export default {
       }
       ).then(response => (
         this.questionList = response.data.data
-      ))
+      )).then(
+        this.resetAll
+      )
     },
     // question detail
+    resetAll () {
+      this.questionModel.subject = ''
+      this.questionModel.chapter = ''
+      this.questionModel.type = ''
+      this.questionModel.master = '1'
+      this.questionModel.content = ''
+      this.questionModel.difficulty = ''
+      this.form.options = ['选项1']
+      this.form.detail = ''
+      this.$refs.subject.resetChoosed()
+      this.$refs.chapter.resetChoosed()
+      this.$refs.type.resetChoosed()
+    },
     addOption () {
       if (this.form.options.length <= 4) {
         this.form.options.push('')
@@ -260,13 +282,15 @@ export default {
 
   .input-box {
     width: 32%;
-    padding-top: 5px;
+    padding-top: 20px;
+    padding: 5px;
+    border-radius: 2px;
     float: left;
+    height: 20px;
   }
 
   .input-text {
     text-align:center;
-    padding-left: 5px;
     width: 30%;
     float: left;
   }
@@ -274,6 +298,11 @@ export default {
   .input-content{
     width: 70%;
     float: left;
+  }
+
+  .content {
+    width: 100%;
+    padding: 5px;
   }
 
   .content {
